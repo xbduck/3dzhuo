@@ -92,28 +92,49 @@ class BilliardGame3D {
 
     initSocket() {
         // 连接到服务器（需要配置服务器地址）
-        // this.socket = io('https://your-server.com');
+        this.socket = io('http://192.168.62.57:3000');
 
-        this.socket = {
-            emit: (event, data) => {
-                console.log('发送消息:', event, data);
-                // 模拟服务器响应
-                if (event === 'login') {
-                    this.playerId = 'player_' + Date.now();
-                    this.showLoginSuccess();
-                } else if (event === 'find_match') {
-                    this.showMatching();
-                    setTimeout(() => {
-                        this.showMatchFound();
-                    }, 3000);
-                } else if (event === 'shoot') {
-                    console.log('发送击球数据:', data);
-                }
-            },
-            on: (event, callback) => {
-                console.log('监听事件:', event);
-            }
-        };
+        // this.socket = {
+        //     emit: (event, data) => {
+        //         console.log('发送消息:', event, data);
+        //         // 模拟服务器响应
+        //         if (event === 'login') {
+        //             this.playerId = 'player_' + Date.now();
+        //             this.showLoginSuccess();
+        //         } else if (event === 'find_match') {
+        //             this.showMatching();
+        //             setTimeout(() => {
+        //                 this.showMatchFound();
+        //             }, 3000);
+        //         } else if (event === 'shoot') {
+        //             console.log('发送击球数据:', data);
+        //         }
+        //     },
+        //     on: (event, callback) => {
+        //         console.log('监听事件:', event);
+        //     }
+        // };
+        // 监听服务器事件
+        this.socket.on('connect', () => {
+            console.log('✅ 已连接到服务器');
+        });
+
+        this.socket.on('login_success', (data) => {
+            this.playerId = data.userId;
+            this.showLoginSuccess();
+        });
+
+        this.socket.on('match_found', (data) => {
+            this.showMatchFound(data);
+        });
+
+        this.socket.on('opponent_shoot', (data) => {
+            this.handleOpponentShoot(data);
+        });
+
+        this.socket.on('score_updated', (data) => {
+            this.updateScore(data);
+        });
     }
 
     initUI() {

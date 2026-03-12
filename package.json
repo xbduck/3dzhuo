@@ -1,0 +1,21 @@
+{
+    "name": "billiard-game",
+    "version": "1.0.0",
+    "description": "3D桌球游戏 - 多人在线对战版",
+    "main": "3d-billiard-server.js",
+    "scripts": {
+      "start": "node 3d-billiard-server.js",
+      "dev": "nodemon 3d-billiard-server.js"
+    },
+    "dependencies": {
+      "express": "^4.18.2",
+      "socket.io": "^4.5.4",
+      "cors": "^2.8.5",
+      "bcrypt": "^5.1.0",
+      "jsonwebtoken": "^9.0.0",
+      "mongoose": "^7.0.3"
+    },
+    "keywords": ["billiard", "game", "websocket"],
+    "author": "你的名字",
+    "license": "MIT"
+  }
